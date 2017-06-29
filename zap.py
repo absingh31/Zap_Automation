@@ -25,3 +25,31 @@ print('Spidering target %s' % target)
 zap.spider.scan(target,apikey)
 
 
+# Progress of spider
+time.sleep(2)
+print('Status %s' % zap.spider.status)
+while (int(zap.spider.status) < 100):
+   print('Spider progress %: ' + zap.spider.status)
+
+   time.sleep(400)
+
+print('Spider completed')
+
+# Give the passive scanner a chance to finish
+time.sleep(5)
+
+# The active scanning starts
+print('Scanning target %s' % target)
+zap.ascan.scan(target)
+while (int(zap.ascan.status) < 100):
+   print('Scan progress %: ' + zap.ascan.status)
+
+   time.sleep(600)
+
+print('Scan completed')
+
+# Report the results
+print('Hosts: ' + ', '.join(zap.core.hosts))
+print('Alerts: ')
+pprint(zap.core.alerts())
+
